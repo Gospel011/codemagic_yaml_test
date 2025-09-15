@@ -1,0 +1,24 @@
+workflows:
+  env_test_flow:
+    name: See all variables available using the app level environment variable setup
+    environment:
+      vars:
+        LOCAL_PUBLIC_KEY: "Local key"
+      groups:
+        - default
+      flutter: 3.27.4
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "main"
+          include: true          
+    scripts:
+      - name: "Print available environment variables"
+        script: |
+          #!/bin/bash
+          set -ex
+
+          printenv
