@@ -47,7 +47,7 @@ workflows:
           #!/bin/bash
           set -ex
 
-          printenv | grep MY
+          printenv | grep MY_
       - name: "Build for android"
         script: flutter build aab
       - name: "Build for ios"
