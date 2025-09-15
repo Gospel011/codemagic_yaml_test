@@ -54,5 +54,5 @@ workflows:
         script: flutter build ipa
     artifacts:
       - build/ios/**/*.ipa
-      - build/app/**/outputs/**/*-release.aab
+      - build/app/**/outputs/**/release/*-release.aab
     
