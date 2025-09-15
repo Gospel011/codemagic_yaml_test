@@ -28,6 +28,11 @@ workflows:
     name: "Build android and ios app" 
     instance_type: mac_mini_m2
     max_build_duration: 10
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - ~/.gradle/caches
+        - ~/Library/Caches/Cocoapods
     environment:
       groups:
         - app-secrets
