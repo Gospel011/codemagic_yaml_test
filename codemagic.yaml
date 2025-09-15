@@ -22,3 +22,4 @@ workflows:
           set -ex
 
           printenv
+          echo "$SAMPLE_PUBLIC_KEY"
