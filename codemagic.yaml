@@ -50,9 +50,6 @@ workflows:
           printenv | grep MY_
       - name: "Build for android"
         script: flutter build aab
-      - name: "Build for ios"
-        script: flutter build ipa
     artifacts:
-      - build/ios/**/*.ipa
       - build/app/**/outputs/**/release/*-release.aab
     
