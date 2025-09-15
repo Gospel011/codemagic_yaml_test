@@ -13,7 +13,7 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: "main"
+        - pattern: "test_branch"
           include: true
       cancel_previous_builds: true        
     scripts:
