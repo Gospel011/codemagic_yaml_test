@@ -14,7 +14,8 @@ workflows:
         - push
       branch_patterns:
         - pattern: "main"
-          include: true          
+          include: true
+      cancel_previous_builds: true        
     scripts:
       - name: "Print available environment variables"
         script: |
@@ -23,3 +24,35 @@ workflows:
 
           printenv
           echo "$SAMPLE_PUBLIC_KEY"
+  build_mobile_app:
+    name: "Build android and ios app" 
+    instance_type: mac_mini_m2
+    max_build_duration: 10
+    environment:
+      groups:
+        - other
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "main"
+          include: true
+      cancel_previous_builds: true
+    scripts:
+      - name: "Show my environment variables"
+        script: |
+          #!/bin/bash
+          set -ex
+
+          printenv | grep MY
+      - name: "Build for android"
+        script: flutter build aab
+      - name: "Build for ios"
+        script: flutter build ipa
+    artifacts:
+      - build/ios/**/*.ipa
+      - build/app/**/outputs/**/*-release.aab
+    
