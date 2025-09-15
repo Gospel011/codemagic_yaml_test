@@ -25,7 +25,7 @@ workflows:
           printenv
           echo "$SAMPLE_PUBLIC_KEY"
   build_mobile_app:
-    name: "Build android and ios app" 
+    name: "Build android aab and apk" 
     instance_type: mac_mini_m2
     max_build_duration: 10
     cache:
@@ -53,10 +53,13 @@ workflows:
           set -ex
 
           printenv | grep MY_
-      - name: "Build for android"
+      - name: "Build android aab"
         script: flutter build aab
+      - name: "Build android apk"
+        script: flutter build apk
     artifacts:
       - build/app/**/outputs/**/release/*-release.aab
+      - build/app/**/outputs/**/release/*-release.apk
     publishing:
       email:
         recipients:
