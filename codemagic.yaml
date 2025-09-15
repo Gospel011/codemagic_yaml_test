@@ -5,7 +5,7 @@ workflows:
       vars:
         LOCAL_PUBLIC_KEY: "Local key"
       groups:
-        - default
+        - other
       flutter: 3.27.4
       xcode: latest
       cocoapods: default
