@@ -16,29 +16,6 @@ definitions:
       name: Build apk
       script: flutter build apk
 
-  # artifacts_setup:
-  #   - &build_artifacts
-  #     artifacts:
-  #       - build/app/**/outputs/**/release/**/*-release.aab
-  #       - build/app/**/outputs/**/release/**/*-release.apk
-  #       - build/ios/ipa/*.ipa
-
-  # environment_setup:
-  #   - &environment_setup
-  #     vars:
-  #       LOCAL_PUBLIC_KEY: "Local key"
-  #     groups:
-  #       - other
-  #     flutter: stable
-  #     xcode: latest
-  #     cocoapods: default
-
-  # cache_setup:
-  #   - &cache_setup
-  #     - ~/.pub-cache
-  #     - ~/.gradle/caches
-  #     - ~/Library/Caches/Cocoapods
-
 workflows:
   env_test_flow:
     name: See all variables available using the app level environment variable setup
@@ -52,7 +29,6 @@ workflows:
       cocoapods: default
     cache:
       cache_paths:
-        # <<: *cache_setup
         - ~/.pub-cache
         - ~/.gradle/caches
         - ~/Library/Caches/Cocoapods
@@ -72,7 +48,10 @@ workflows:
     max_build_duration: 10
     cache:
       cache_paths:
-        <<: *cache_setup
+        # <<: *cache_setup
+        - ~/.pub-cache
+        - ~/.gradle/caches
+        - ~/Library/Caches/Cocoapods
     environment:
       groups:
         - app-secrets
