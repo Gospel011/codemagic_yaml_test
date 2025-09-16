@@ -41,19 +41,13 @@ definitions:
 workflows:
   env_test_flow:
     name: See all variables available using the app level environment variable setup
+    <<: *instance_type_and_cache_setup
     environment:
       vars:
         LOCAL_PUBLIC_KEY: "Local key"
       groups:
         - other
-      flutter: stable
-      xcode: latest
-      cocoapods: default
-    cache:
-      cache_paths:
-        - ~/.pub-cache
-        - ~/.gradle/caches
-        - ~/Library/Caches/Cocoapods
+      <<: *dependency_versions
     triggering:
       events:
         - push
