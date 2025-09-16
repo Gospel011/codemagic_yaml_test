@@ -23,15 +23,15 @@ definitions:
   #       - build/app/**/outputs/**/release/**/*-release.apk
   #       - build/ios/ipa/*.ipa
 
-  environment_setup:
-    - &environment_setup
-      vars:
-        LOCAL_PUBLIC_KEY: "Local key"
-      groups:
-        - other
-      flutter: stable
-      xcode: latest
-      cocoapods: default
+  # environment_setup:
+  #   - &environment_setup
+  #     vars:
+  #       LOCAL_PUBLIC_KEY: "Local key"
+  #     groups:
+  #       - other
+  #     flutter: stable
+  #     xcode: latest
+  #     cocoapods: default
 
   # cache_setup:
   #   - &cache_setup
@@ -43,7 +43,13 @@ workflows:
   env_test_flow:
     name: See all variables available using the app level environment variable setup
     environment:
-      <<: *environment_setup
+      vars:
+        LOCAL_PUBLIC_KEY: "Local key"
+      groups:
+        - other
+      flutter: stable
+      xcode: latest
+      cocoapods: default
     cache:
       cache_paths:
         # <<: *cache_setup
