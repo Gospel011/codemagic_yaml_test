@@ -15,6 +15,11 @@ definitions:
     - &build_apk
       name: Build apk
       script: flutter build apk
+    - &build_artifacts
+      artifacts:
+        - build/app/**/outputs/**/release/**/*-release.aab
+        - build/app/**/outputs/**/release/**/*-release.apk
+        - build/ios/ipa/*.ipa
 
 workflows:
   env_test_flow:
@@ -69,11 +74,11 @@ workflows:
       - *show_defined_environment_variables
       - *build_aab
       - *build_apk
-    artifacts:
-      - build/app/**/outputs/**/release/**/*-release.aab
-      - build/app/**/outputs/**/release/**/*-release.apk
-      - build/ios/ipa/*.ipa
-        # <<: *build_artifacts
+    # artifacts:
+    #   - build/app/**/outputs/**/release/**/*-release.aab
+    #   - build/app/**/outputs/**/release/**/*-release.apk
+    #   - build/ios/ipa/*.ipa
+    <<: *build_artifacts
     publishing:
       email:
         recipients:
