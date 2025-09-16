@@ -18,9 +18,10 @@ definitions:
 
   artifacts_setup:
     - &build_artifacts
-      - build/app/**/outputs/**/release/**/*-release.aab
-      - build/app/**/outputs/**/release/**/*-release.apk
-      - build/ios/ipa/*.ipa
+      artifacts:
+        - build/app/**/outputs/**/release/**/*-release.aab
+        - build/app/**/outputs/**/release/**/*-release.apk
+        - build/ios/ipa/*.ipa
 
   environment_setup:
     - &environment_setup
@@ -45,7 +46,10 @@ workflows:
       <<: *environment_setup
     cache:
       cache_paths:
-        <<: *cache_setup
+        # <<: *cache_setup
+        - ~/.pub-cache
+        - ~/.gradle/caches
+        - ~/Library/Caches/Cocoapods
     triggering:
       events:
         - push
