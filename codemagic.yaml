@@ -1,12 +1,12 @@
 workflows:
   # scripts:
-  - &show_defined_environment_variables
-    name: Show defined environment variables
-    script: |
-      #!/bin/bash
-      set -ex
+  #   - &show_defined_environment_variables
+  #     name: Show defined environment variables
+  #     script: |
+  #       #!/bin/bash
+  #       set -ex
 
-      printenv
+  #       printenv
   env_test_flow:
     name: See all variables available using the app level environment variable setup
     environment:
@@ -29,7 +29,8 @@ workflows:
         - pattern: "test_branch"
           include: true
       cancel_previous_builds: true
-    # scripts:
+    scripts:
+      - *show_defined_environment_variables
     #   - &show_defined_environment_variables
     #     name: Show defined environment variables section
     #     script: |
@@ -62,7 +63,15 @@ workflows:
           include: true
       cancel_previous_builds: true
     scripts:
-      - *show_defined_environment_variables
+      - &show_defined_environment_variables
+        name: Show defined environment variables section
+        script: |
+          #!/bin/bash
+          set -ex
+          
+          printenv
+          echo "$SAMPLE_PUBLIC_KEY"
+          echo "Done with section"
       - name: "Build android aab"
         script: flutter build aab
       - name: "Build android apk"
