@@ -15,6 +15,12 @@ definitions:
     - &build_apk
       name: Build apk
       script: flutter build apk
+  environment_section:
+    - &dependency_versions
+      xcode: latest
+      cocoapods: default
+      flutter: 3.27.4
+  build_artifacts:
     - &build_artifacts
       artifacts:
         - build/app/**/outputs/**/release/**/*-release.aab
@@ -60,9 +66,7 @@ workflows:
     environment:
       groups:
         - app-secrets
-      flutter: 3.27.4
-      xcode: latest
-      cocoapods: default
+      <<: *dependency_versions
     triggering:
       events:
         - push
@@ -74,10 +78,7 @@ workflows:
       - *show_defined_environment_variables
       - *build_aab
       - *build_apk
-    # artifacts:
-    #   - build/app/**/outputs/**/release/**/*-release.aab
-    #   - build/app/**/outputs/**/release/**/*-release.apk
-    #   - build/ios/ipa/*.ipa
+
     <<: *build_artifacts
     publishing:
       email:
