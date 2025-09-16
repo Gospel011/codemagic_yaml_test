@@ -14,9 +14,14 @@ workflows:
         LOCAL_PUBLIC_KEY: "Local key"
       groups:
         - other
-      flutter: 3.27.4
+      flutter: stable
       xcode: latest
       cocoapods: default
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - ~/.gradle/caches
+        - ~/Library/Caches/Cocoapods
     triggering:
       events:
         - push
@@ -25,14 +30,15 @@ workflows:
           include: true
       cancel_previous_builds: true
     scripts:
-    - &show_defined_environment_variables
-      name: Show defined environment variables
-      script: |
-        #!/bin/bash
-        set -ex
-        
-        printenv
-        echo "$SAMPLE_PUBLIC_KEY"
+      - &show_defined_environment_variables
+        name: Show defined environment variables section
+        script: |
+          #!/bin/bash
+          set -ex
+          
+          printenv
+          echo "$SAMPLE_PUBLIC_KEY"
+          echo "Done with section"
   build_mobile_app:
     name: "Build android aab and apk" 
     instance_type: mac_mini_m2
@@ -56,12 +62,7 @@ workflows:
           include: true
       cancel_previous_builds: true
     scripts:
-      - name: "Show my environment variables"
-        script: |
-          #!/bin/bash
-          set -ex
-
-          printenv | grep MY_
+      - *show_defined_environment_variables
       - name: "Build android aab"
         script: flutter build aab
       - name: "Build android apk"
