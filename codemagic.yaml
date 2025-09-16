@@ -81,4 +81,3 @@ workflows:
     publishing:
       email:
         recipients: *email_recipients
-
