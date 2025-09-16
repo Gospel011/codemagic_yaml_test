@@ -55,8 +55,10 @@ workflows:
         - pattern: "test_branch"
           include: true
       cancel_previous_builds: true
-    scripts:
+    pre_clone_scripts:
       - *show_defined_environment_variables
+      - name: Another pre-clone script
+        script: echo "Hello World 🌎👋"
 
   build_mobile_app:
     name: "Build android aab and apk"
