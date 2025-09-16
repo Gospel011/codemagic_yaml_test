@@ -1,7 +1,29 @@
-workflows:
-  env_test_flow:
-    name: See all variables available using the app level environment variable setup
-    environment:
+definitions:
+  static_scripts:
+    - &show_defined_environment_variables
+      name: Show defined environment variables.
+      script: |
+        #!/bin/bash
+        set -ex
+        
+        printenv
+        echo "$SAMPLE_PUBLIC_KEY"
+        echo "Done with section"
+    - &build_aab
+      name: Build aab
+      script: flutter build aab
+    - &build_apk
+      name: Build apk
+      script: flutter build apk
+
+  artifacts_setup:
+    - &build_artifacts
+      - build/app/**/outputs/**/release/**/*-release.aab    
+      - build/app/**/outputs/**/release/**/*-release.apk    
+      - build/ios/ipa/*.ipa
+
+  environment_setup:
+    - &environment_setup
       vars:
         LOCAL_PUBLIC_KEY: "Local key"
       groups:
@@ -9,11 +31,21 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+
+  cache_setup:
+    - &cache_setup
+      - ~/.pub-cache
+      - ~/.gradle/caches
+      - ~/Library/Caches/Cocoapods
+      
+workflows:
+  env_test_flow:
+    name: See all variables available using the app level environment variable setup
+    environment:
+      <<: *environment_setup
     cache:
       cache_paths:
-        - ~/.pub-cache
-        - ~/.gradle/caches
-        - ~/Library/Caches/Cocoapods
+        <<: *cache_setup
     triggering:
       events:
         - push
@@ -22,24 +54,15 @@ workflows:
           include: true
       cancel_previous_builds: true
     scripts:
-      - &show_defined_environment_variables
-        name: Show defined environment variables section
-        script: |
-          #!/bin/bash
-          set -ex
-          
-          printenv
-          echo "$SAMPLE_PUBLIC_KEY"
-          echo "Done with section"
+      - *show_defined_environment_variables
+      
   build_mobile_app:
     name: "Build android aab and apk" 
     instance_type: mac_mini_m2
     max_build_duration: 10
     cache:
       cache_paths:
-        - ~/.pub-cache
-        - ~/.gradle/caches
-        - ~/Library/Caches/Cocoapods
+        <<: *cache_setup
     environment:
       groups:
         - app-secrets
@@ -55,13 +78,10 @@ workflows:
       cancel_previous_builds: true
     scripts:
       - *show_defined_environment_variables
-      - name: "Build android aab"
-        script: flutter build aab
-      - name: "Build android apk"
-        script: flutter build apk
+      - *build_aab
+      - *build_apk
     artifacts:
-      - build/app/**/outputs/**/release/*-release.aab
-      - build/app/**/outputs/**/release/*-release.apk
+      <<: *build_artifacts
     publishing:
       email:
         recipients:
