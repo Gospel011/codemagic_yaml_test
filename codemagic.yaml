@@ -1,12 +1,12 @@
 workflows:
-  # scripts:
-  #   - &show_defined_environment_variables
-  #     name: Show defined environment variables
-  #     script: |
-  #       #!/bin/bash
-  #       set -ex
+  scripts:
+    - &show_defined_environment_variables
+      name: Show defined environment variables
+      script: |
+        #!/bin/bash
+        set -ex
 
-  #       printenv
+        printenv
   env_test_flow:
     name: See all variables available using the app level environment variable setup
     environment:
@@ -29,16 +29,16 @@ workflows:
         - pattern: "test_branch"
           include: true
       cancel_previous_builds: true
-    scripts:
-      - &show_defined_environment_variables
-        name: Show defined environment variables section
-        script: |
-          #!/bin/bash
-          set -ex
+    # scripts:
+    #   - &show_defined_environment_variables
+    #     name: Show defined environment variables section
+    #     script: |
+    #       #!/bin/bash
+    #       set -ex
           
-          printenv
-          echo "$SAMPLE_PUBLIC_KEY"
-          echo "Done with section"
+    #       printenv
+    #       echo "$SAMPLE_PUBLIC_KEY"
+    #       echo "Done with section"
   build_mobile_app:
     name: "Build android aab and apk" 
     instance_type: mac_mini_m2
