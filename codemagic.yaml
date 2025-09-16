@@ -1,4 +1,13 @@
 definitions:
+  basic:
+    - &instance_type_and_cache_setup
+      instance_type: mac_mini_m2
+      max_build_duration: 10
+      cache:
+        cache_paths:
+          - ~/.pub-cache
+          - ~/.gradle/caches
+          - ~/Library/Caches/Cocoapods
   static_scripts:
     - &show_defined_environment_variables
       name: Show defined environment variables.
@@ -19,13 +28,17 @@ definitions:
     - &dependency_versions
       xcode: latest
       cocoapods: default
-      flutter: 3.27.4
+      flutter: 3.35.1
   build_artifacts:
     - &build_artifacts
       artifacts:
         - build/app/**/outputs/**/release/**/*-release.aab
         - build/app/**/outputs/**/release/**/*-release.apk
         - build/ios/ipa/*.ipa
+  publishing_setup:
+    - &email_recipients
+      recipients:
+        - ugochukwugospeli111@gmail.com
 
 workflows:
   env_test_flow:
@@ -55,14 +68,7 @@ workflows:
 
   build_mobile_app:
     name: "Build android aab and apk"
-    instance_type: mac_mini_m2
-    max_build_duration: 10
-    cache:
-      cache_paths:
-        # <<: *cache_setup
-        - ~/.pub-cache
-        - ~/.gradle/caches
-        - ~/Library/Caches/Cocoapods
+    <<: *instance_type_and_cache_setup
     environment:
       groups:
         - app-secrets
@@ -82,5 +88,4 @@ workflows:
     <<: *build_artifacts
     publishing:
       email:
-        recipients:
-          - ugochukwugospeli111@gmail.com
+        <<: *email_recipients
