@@ -31,14 +31,12 @@ definitions:
       flutter: 3.35.1
   build_artifacts:
     - &build_artifacts
-      artifacts:
-        - build/app/**/outputs/**/release/**/*-release.aab
-        - build/app/**/outputs/**/release/**/*-release.apk
-        - build/ios/ipa/*.ipa
+      - build/app/**/outputs/**/release/**/*-release.aab
+      - build/app/**/outputs/**/release/**/*-release.apk
+      - build/ios/ipa/*.ipa
   publishing_setup:
     - &email_recipients
-      recipients:
-        - ugochukwugospeli111@gmail.com
+      - ugochukwugospeli111@gmail.com
 
 workflows:
   env_test_flow:
@@ -85,7 +83,7 @@ workflows:
       - *build_aab
       - *build_apk
 
-    <<: *build_artifacts
+    artifacts: *build_artifacts
     publishing:
       email:
-        <<: *email_recipients
+        recipients: *email_recipients
