@@ -16,12 +16,12 @@ definitions:
       name: Build apk
       script: flutter build apk
 
-  artifacts_setup:
-    - &build_artifacts
-      artifacts:
-        - build/app/**/outputs/**/release/**/*-release.aab
-        - build/app/**/outputs/**/release/**/*-release.apk
-        - build/ios/ipa/*.ipa
+  # artifacts_setup:
+  #   - &build_artifacts
+  #     artifacts:
+  #       - build/app/**/outputs/**/release/**/*-release.aab
+  #       - build/app/**/outputs/**/release/**/*-release.apk
+  #       - build/ios/ipa/*.ipa
 
   environment_setup:
     - &environment_setup
@@ -33,11 +33,11 @@ definitions:
       xcode: latest
       cocoapods: default
 
-  cache_setup:
-    - &cache_setup
-      - ~/.pub-cache
-      - ~/.gradle/caches
-      - ~/Library/Caches/Cocoapods
+  # cache_setup:
+  #   - &cache_setup
+  #     - ~/.pub-cache
+  #     - ~/.gradle/caches
+  #     - ~/Library/Caches/Cocoapods
 
 workflows:
   env_test_flow:
