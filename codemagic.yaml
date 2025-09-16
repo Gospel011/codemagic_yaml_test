@@ -5,7 +5,7 @@ definitions:
       script: |
         #!/bin/bash
         set -ex
-        
+
         printenv
         echo "$SAMPLE_PUBLIC_KEY"
         echo "Done with section"
@@ -18,8 +18,8 @@ definitions:
 
   artifacts_setup:
     - &build_artifacts
-      - build/app/**/outputs/**/release/**/*-release.aab    
-      - build/app/**/outputs/**/release/**/*-release.apk    
+      - build/app/**/outputs/**/release/**/*-release.aab
+      - build/app/**/outputs/**/release/**/*-release.apk
       - build/ios/ipa/*.ipa
 
   environment_setup:
@@ -55,9 +55,9 @@ workflows:
       cancel_previous_builds: true
     scripts:
       - *show_defined_environment_variables
-      
+
   build_mobile_app:
-    name: "Build android aab and apk" 
+    name: "Build android aab and apk"
     instance_type: mac_mini_m2
     max_build_duration: 10
     cache:
@@ -81,10 +81,11 @@ workflows:
       - *build_aab
       - *build_apk
     artifacts:
-      paths:
-        <<: *build_artifacts
+      - build/app/**/outputs/**/release/**/*-release.aab
+      - build/app/**/outputs/**/release/**/*-release.apk
+      - build/ios/ipa/*.ipa
+        # <<: *build_artifacts
     publishing:
       email:
         recipients:
           - ugochukwugospeli111@gmail.com
-    
