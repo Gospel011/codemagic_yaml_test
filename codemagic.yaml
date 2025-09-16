@@ -37,7 +37,7 @@ definitions:
       - ~/.pub-cache
       - ~/.gradle/caches
       - ~/Library/Caches/Cocoapods
-      
+
 workflows:
   env_test_flow:
     name: See all variables available using the app level environment variable setup
@@ -81,7 +81,8 @@ workflows:
       - *build_aab
       - *build_apk
     artifacts:
-      <<: *build_artifacts
+      paths:
+        <<: *build_artifacts
     publishing:
       email:
         recipients:
